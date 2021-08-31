@@ -28,7 +28,7 @@ while($keepShopping) {
     }
 
     $itemsChosen = (int)readline("What can I get you? Provide item number please : ");
-    if ($itemsChosen > count($inventory) || $itemsChosen < 1) {
+    if ($itemsChosen > count($inventory) || $itemsChosen < 0) {
         echo "Enter a valid item number!" . PHP_EOL;
         continue;
     }
@@ -48,12 +48,16 @@ while($keepShopping) {
 
     $somethingElse = readline("Can I get you something else? y/n  ");
     if ($somethingElse === 'n') {
+        echo "The total is: " . $total / 100 . "$. Time to pay!";
         if ($total > $customer->money) {
             echo "You don't have enough doe for this one buster!";
             exit;
+        } else {
+            $customer -> money = $customer->money - $total;
+            echo "You have $customer->money $ left.";
         }
         $keepShopping = false;
-        echo "Thank you for visiting your local bodega! The total is : " . ($total / 100) . "$" . PHP_EOL;
+        echo "Thank you for visiting your local bodega!" . PHP_EOL;
         echo "You purchased: ";
         foreach ($basket as $product) {
             echo $product[1] . " " . $product[0] . ", ";
